@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globe | Premium Global Marketplace</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="glass" id="navbar">
+        <div class="logo" onclick="navigateTo('home')">GLO<span class="highlight">BE</span></div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="navigateTo('home')">Home</a></li>
+            <li><a href="#" onclick="navigateTo('products')">Shop</a></li>
+            <li><a href="#" onclick="navigateTo('cart')">Cart</a></li>
+        </ul>
+        <div class="nav-icons">
+            <div id="user-container" style="display:flex; align-items:center; gap:10px">
+                <div id="user-display" onclick="toggleUserMenu()" style="cursor:pointer; position:relative">
+                    <i class="fas fa-user-circle"></i> <span id="user-name">Login</span>
+                    <div id="user-menu" class="glass hidden"
+                        style="position:fixed; top:70px; right:120px; padding:1rem; border-radius:12px; z-index:1001">
+                        <p id="menu-name" style="margin-bottom:0.5rem; font-weight:600"></p>
+                        <button onclick="logout()"
+                            style="background:none; border:none; color:#f87171; cursor:pointer; font-weight:600">Logout</button>
+                    </div>
+                </div>
+            </div>
+            <div id="theme-toggle" onclick="toggleTheme()" style="cursor:pointer; font-size:1.4rem">
+                <i class="fas fa-moon"></i>
+            </div>
+            <div class="cart-icon" onclick="navigateTo('cart')">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home-section" class="hero">
+        <div class="hero-content">
+            <span style="letter-spacing:4px; font-weight:600; font-size:0.9rem; color:var(--text-secondary)">WELCOME TO
+                THE FUTURE</span>
+            <h1 style="margin-top:1rem">Experience <span class="highlight">Next-Gen</span> Shopping</h1>
+            <p>Elevate your lifestyle with our premium curated collection of cutting-edge technology and aesthetic gear.
+            </p>
+            <div style="display:flex; gap:1.5rem; justify-content:center">
+                <a href="#" class="btn btn-primary" onclick="navigateTo('products')">Shop Collection</a>
+                <a href="#" class="btn glass" onclick="navigateTo('products')">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products-section" class="section-padding hidden">
+        <div class="section-header">
+            <div>
+                <h2>Our Collection</h2>
+                <p>Curated for your lifestyle</p>
+            </div>
+            <div class="filters">
+                <select id="category-filter" onchange="applyFilters()">
+                    <option value="all">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Gadgets">Gadgets</option>
+                    <option value="Accessories">Accessories</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Home Decor">Home Decor</option>
+                    <option value="Sports">Sports</option>
+                </select>
+                <select id="sort-filter" onchange="applyFilters()">
+                    <option value="default">Sort By</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Top Rated</option>
+                </select>
+            </div>
+        </div>
+        <div class="product-grid" id="product-grid">
+            <!-- Products will be rendered here -->
+        </div>
+    </section>
+
+    <!-- Auth Section -->
+    <section id="auth-section" class="section-padding hidden">
+        <div class="auth-container glass">
+            <div id="login-form">
+                <h2 style="text-align:center; margin-bottom:2rem">Welcome <span class="highlight">Back</span></h2>
+                <form onsubmit="handleAuth(event, 'login')">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-input" required placeholder="name@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-input" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem">Sign In</button>
+                </form>
+                <p style="text-align:center; margin-top:1.5rem; color:var(--text-secondary)">
+                    Don't have an account? <span onclick="toggleAuth('signup')"
+                        style="color:#60a5fa; cursor:pointer">Create one</span>
+                </p>
+            </div>
+            <div id="signup-form" class="hidden">
+                <h2 style="text-align:center; margin-bottom:2rem">Join <span class="highlight">Glow</span></h2>
+                <form onsubmit="handleAuth(event, 'signup')">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" class="form-input" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-input" required placeholder="name@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-input" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%; margin-top:1rem">Create
+                        Account</button>
+                </form>
+                <p style="text-align:center; margin-top:1.5rem; color:var(--text-secondary)">
+                    Already have an account? <span onclick="toggleAuth('login')"
+                        style="color:#60a5fa; cursor:pointer">Sign In</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Details Section -->
+    <section id="details-section" class="section-padding hidden">
+        <div id="product-details-container">
+            <!-- Product details akan dirender di sini -->
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section id="cart-section" class="section-padding hidden">
+        <h2>Your Shopping Cart</h2>
+        <div id="cart-container">
+            <!-- Cart items akan dirender di sini -->
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section id="checkout-section" class="section-padding hidden">
+        <h2>Checkout</h2>
+        <div id="checkout-container">
+            <!-- Checkout form & summary akan dirender di sini -->
+            <!-- Checkout form & summary akan dirender di here -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo">GLO<span class="highlight">BE</span></div>
+            <p>&copy; 2026 Globe. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
